@@ -8,15 +8,39 @@
 </head>
 <body>
     <div class="container">
-        <h1>Yapılacaklar</h1>
-        <form id="todo-form">
-            <input type="text" id="todo-input" placeholder="Yeni görev ekle..." autocomplete="off">
-            <button type="submit">Ekle</button>
-        </form>
-        <ul id="todo-list"></ul>
-        <div id="footer" class="footer hidden">
-            <span id="count"></span>
-            <button id="clear-completed">Tamamlananları Temizle</button>
+        <!-- Auth Section -->
+        <div id="auth-section" class="hidden">
+            <h1>Yapılacaklar</h1>
+            <div id="auth-message" class="auth-message hidden"></div>
+            <form id="auth-form">
+                <input type="email" id="auth-email" placeholder="E-posta" required>
+                <input type="password" id="auth-password" placeholder="Şifre (min 6 karakter)" minlength="6" required>
+                <button type="submit" id="auth-submit-btn">Giriş Yap</button>
+            </form>
+            <p class="auth-toggle">
+                <span id="auth-toggle-text">Hesabın yok mu?</span>
+                <a href="#" id="auth-toggle-link">Kayıt Ol</a>
+            </p>
+        </div>
+
+        <!-- App Section -->
+        <div id="app-section" class="hidden">
+            <div class="app-header">
+                <h1>Yapılacaklar</h1>
+                <div class="user-info">
+                    <span id="user-email"></span>
+                    <button id="logout-btn">Çıkış</button>
+                </div>
+            </div>
+            <form id="todo-form">
+                <input type="text" id="todo-input" placeholder="Yeni görev ekle..." autocomplete="off">
+                <button type="submit">Ekle</button>
+            </form>
+            <ul id="todo-list"></ul>
+            <div id="footer" class="footer hidden">
+                <span id="count"></span>
+                <button id="clear-completed">Tamamlananları Temizle</button>
+            </div>
         </div>
     </div>
     <script src="app.js"></script>
