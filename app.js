@@ -52,13 +52,24 @@ async function authFetch(endpoint, body) {
     return data;
 }
 
+const REDIRECT_URL = "https://onurdedeli.github.io/todo-app/";
+
 async function signUp(email, password) {
-    await authFetch("signup", {
-        email,
-        password,
-        data: {},
-        gotrue_meta_security: {},
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/signup?redirect_to=${encodeURIComponent(REDIRECT_URL)}`, {
+        method: "POST",
+        headers: {
+            apikey: SUPABASE_KEY,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email,
+            password,
+            data: {},
+            gotrue_meta_security: {},
+        }),
     });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error_description || data.msg || data.message || "Bir hata oluştu");
     showAuthMessage("Kayıt başarılı! E-postanı kontrol et ve onay bağlantısına tıkla.", "success");
 }
 
