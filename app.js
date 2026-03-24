@@ -276,29 +276,33 @@ clearBtn.addEventListener("click", clearCompleted);
 
 // ── Init ──
 (async () => {
-    // 1. Check if redirected from email confirmation
-    const fromRedirect = await handleAuthRedirect();
-    if (fromRedirect) {
-        showApp();
-        return;
-    }
+    try {
+        // 1. Check if redirected from email confirmation
+        const fromRedirect = await handleAuthRedirect();
+        if (fromRedirect) {
+            showApp();
+            return;
+        }
 
-    // 2. Try to restore session from localStorage
-    const savedToken = localStorage.getItem("supabase_token");
-    if (savedToken) {
-        const user = await getUser(savedToken);
-        if (user) {
-            accessToken = savedToken;
-            currentUser = user;
-            showApp();
-            return;
+        // 2. Try to restore session from localStorage
+        const savedToken = localStorage.getItem("supabase_token");
+        if (savedToken) {
+            const user = await getUser(savedToken);
+            if (user) {
+                accessToken = savedToken;
+                currentUser = user;
+                showApp();
+                return;
+            }
+            // Token expired, try refresh
+            const refreshed = await refreshSession();
+            if (refreshed) {
+                showApp();
+                return;
+            }
         }
-        // Token expired, try refresh
-        const refreshed = await refreshSession();
-        if (refreshed) {
-            showApp();
-            return;
-        }
+    } catch (err) {
+        console.error("Init error:", err);
     }
 
     // 3. No session, show login
