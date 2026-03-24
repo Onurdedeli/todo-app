@@ -62,7 +62,12 @@ body {
     transition: background 0.2s;
 }
 
-#auth-submit-btn:hover {
+#auth-submit-btn:disabled {
+    background: #a0a0a0;
+    cursor: not-allowed;
+}
+
+#auth-submit-btn:hover:not(:disabled) {
     background: #3a56d4;
 }
 

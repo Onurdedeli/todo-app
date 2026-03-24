@@ -145,14 +145,18 @@ authForm.addEventListener("submit", async (e) => {
     const email = authEmail.value.trim();
     const password = authPassword.value;
 
+    authSubmitBtn.disabled = true;
     try {
         if (isLoginMode) {
             await signIn(email, password);
         } else {
             await signUp(email, password);
+            authSubmitBtn.textContent = "Onay E-postası Gönderildi";
+            return;
         }
     } catch (err) {
         showAuthMessage(err.message, "error");
+        authSubmitBtn.disabled = false;
     }
 });
 
